@@ -41,6 +41,27 @@
       // Kui oleme siia jõudnud, võime kasutaja sisse logida
 			if($password_error == "" && $email_error == ""){
 				echo "Võib sisse logida! Kasutajanimi on ".$email." ja parool on ".$password;
+				
+				$password_hash = hash("sha512", $password);
+				
+				$stmt = $mysqli->prepare("SELECT id, email FROM user_sample WHERE email=? AND password=?");
+				$stmt->bind_param("ss", $email, $password_hash);
+				
+				//paneme vastuse muutujatesse
+				$stmt->bind_result($id_from_db, $email_from_db);
+				$stmt->execute();
+				
+				//küsima kas AB'ist saime kätte
+				if($stmt->fetch()){
+					//leidis
+					echo "kasutaja id=".$id_from_db;
+				}else{
+					// tühi, ei leidnud , ju siis midagi valesti
+					echo "Wrong password or email!";
+					
+				}
+				
+				$stmt->close();
 			}
 
 		} // login if end
