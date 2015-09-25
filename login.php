@@ -73,7 +73,7 @@
 				echo "<br>";
 				echo $password_hash;
 				
-				$stmt = $mysqli->prepare("INSERT INTO usesdf_sample (email, password) VALUE (?, ?)");
+				$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?, ?)");
 				
 				//echo $mysqli->error;
 				//echo $stmt->error;
